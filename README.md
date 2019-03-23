@@ -2,7 +2,10 @@
 Simple Hardware Test Script for Explorer Devices
 
 # Usage
-
+If git is not installed
+    
+    sudo apt-get install git
+    
     git clone https://github.com/EnhancedRadioDevices/ExplorerTest.git
     cd ExplorerTest
     sudo ./run_test
