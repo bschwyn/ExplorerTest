@@ -16,16 +16,23 @@ echo "You should see the name of the hat on the next line."
 cat /proc/device-tree/hat/product
 echo
 
-# get spi_serial and install
-if ! $(python -c "import spi_serial"); then
-echo "**INSTALLING SPI_SERIAL"
-if [[ $prereq ]]; then
-apt-get update
-apt-get install build-essential python-pip python-dev python-imaging python-smbus git
-prereq=0
-fi
+# in this part install cmake TODO make of of those @if things
+apt-get install build-essential
+#maybe I can just do #####sudo apt-get install cmake
+wget http://www.cmake.org/files/v3.14/cmake-3.14.1.tar.gz
+tar xf cmake-3.14.1.tar.gz
+cd cmake-3.14.1
+./configure
+make
+./bootstrap
+make
+make install
+cd $here
 
-if ! $(python -c "import mraa"); then
+### install json-c
+
+if ! $(python -c "import mraa"); then  #note "import sys; sys.path.append('/home/pi/ExplorerTest/libs/mraa') doesn't work
+sudo apt-get install build-essential swig3.0 python-dev nodejs-dev cmake libjson-c-dev
 git clone https://github.com/intel-iot-devkit/mraa.git libs/mraa
 cd libs/mraa
 mkdir build
@@ -34,6 +41,15 @@ cmake ..
 make
 make install
 cd $here
+fi
+
+# get spi_serial and install
+if ! $(python -c "import spi_serial"); then
+echo "**INSTALLING SPI_SERIAL"
+if [[ $prereq ]]; then
+apt-get update
+apt-get install build-essential python-pip python-dev python-imaging python-smbus git
+prereq=0
 fi
 
 git clone https://github.com/EnhancedRadioDevices/spi_serial.git libs/spi_serial
