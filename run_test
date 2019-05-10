@@ -16,28 +16,12 @@ echo "You should see the name of the hat on the next line."
 cat /proc/device-tree/hat/product
 echo
 
-# in this part install cmake TODO make of of those @if things
-apt-get install build-essential
-#maybe I can just do #####sudo apt-get install cmake
-wget http://www.cmake.org/files/v3.14/cmake-3.14.1.tar.gz
-tar xf cmake-3.14.1.tar.gz
-cd cmake-3.14.1
-./configure
-make
-./bootstrap
-make
-make install
-cd $here
-
-### install json-c
-
-if ! $(python -c "import mraa"); then  #note "import sys; sys.path.append('/home/pi/ExplorerTest/libs/mraa') doesn't work
-sudo apt-get install build-essential swig3.0 python-dev nodejs-dev cmake libjson-c-dev
-git clone https://github.com/intel-iot-devkit/mraa.git libs/mraa
-cd libs/mraa
-mkdir build
-cd build
-cmake ..
+# get mraa and install
+if ! $(python -c "import mraa"); then
+sudo apt-get install libpcre3-dev cmake python-dev swig
+git clone https://github.com/intel-iot-devkit/mraa.git
+mkdir mraa/buld && cd$_
+cmake .. -DBUILDSWIGNODE=OFF
 make
 make install
 cd $here
@@ -51,13 +35,11 @@ apt-get update
 apt-get install build-essential python-pip python-dev python-imaging python-smbus git
 prereq=0
 fi
-
 git clone https://github.com/EnhancedRadioDevices/spi_serial.git libs/spi_serial
 cd libs/spi_serial
 python setup.py install
 cd $here
 fi
-reset_spi_serial.py
 
 
 # get Adafruit_GPIO
@@ -74,7 +56,6 @@ python setup.py install
 cd $here
 fi
 
-
 # get Adafruit_SSD1306
 if ! $(python -c "import Adafruit_SSD1306"); then
 if [[ $prereq ]]; then
@@ -89,16 +70,22 @@ cd libs/Adafruit_Python_SSD1306
 python setup.py install
 cd $here
 
-
 # get PIL and install
 echo "**INSTALLING PIL"
 pip install pillow
 
 fi
 
+echo "if spi* is NOT in the result of 'ls /dev',"
+echo "then add the following line to /boot/config.txt: dtparam=spi=on and reboot the pi. Then run the installation file again"
+reset_spi_serial.py
+
 # run shapes
 echo "**RUNNING shapes.py"
 echo "You should see some shapes and a hello world message on your screen."
+echo "If you get an IOError, then run sudo raspi-config and on the next screen choose:"
+echo "1. Interfacing Options"
+echo "2. I2C"
 python shapes.py
 #if Edison
 
