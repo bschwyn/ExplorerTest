@@ -20,7 +20,7 @@ echo
 if ! $(python -c "import mraa"); then
 sudo apt-get install libpcre3-dev cmake python-dev swig
 git clone https://github.com/intel-iot-devkit/mraa.git
-mkdir mraa/buld && cd$_
+mkdir mraa/build && cd $_
 cmake .. -DBUILDSWIGNODE=OFF
 make
 make install
