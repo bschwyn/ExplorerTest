@@ -24,6 +24,7 @@ mkdir mraa/build && cd $_
 cmake .. -DBUILDSWIGNODE=OFF
 make
 make install
+cp src/libmraa.so* /usr/lib
 cd $here
 fi
 
