@@ -18,7 +18,12 @@ echo
 
 # get mraa and install
 if ! $(python -c "import mraa"); then
+if [[ $prereq ]]; then
+apt-get update
 apt-get install libpcre3-dev cmake python-dev swig
+prereq=0
+fi
+echo "**INSTALLING MRAA"
 git clone https://github.com/intel-iot-devkit/mraa.git
 mkdir mraa/build && cd $_
 cmake .. -DBUILDSWIGNODE=OFF
