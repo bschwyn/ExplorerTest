@@ -18,7 +18,7 @@ echo
 
 # get mraa and install
 if ! $(python -c "import mraa"); then
-sudo apt-get install libpcre3-dev cmake python-dev swig
+apt-get install libpcre3-dev cmake python-dev swig
 git clone https://github.com/intel-iot-devkit/mraa.git
 mkdir mraa/build && cd $_
 cmake .. -DBUILDSWIGNODE=OFF
@@ -36,7 +36,7 @@ apt-get update
 apt-get install build-essential python-pip python-dev python-imaging python-smbus git
 prereq=0
 fi
-git clone https://github.com/EnhancedRadioDevices/spi_serial.git libs/spi_serial
+git clone https://github.com/bschwyn/spi_serial.git libs/spi_serial
 cd libs/spi_serial
 python setup.py install
 cd $here
@@ -77,8 +77,9 @@ pip install pillow
 
 fi
 
-echo "if spi* is NOT in the result of 'ls /dev',"
-echo "then add the following line to /boot/config.txt: dtparam=spi=on and reboot the pi. Then run the installation file again"
+echo "if spi* is NOT in the result of 'ls /dev'"
+echo "then add the following line to /boot/config.txt: dtparam=spi=on and reboot the pi."
+echo "Then run the installation file again."
 reset_spi_serial.py
 
 # run shapes
@@ -87,6 +88,7 @@ echo "You should see some shapes and a hello world message on your screen."
 echo "If you get an IOError, then run sudo raspi-config and on the next screen choose:"
 echo "1. Interfacing Options"
 echo "2. I2C"
+echo "3. Enable I2C"
 python shapes.py
 #if Edison
 
