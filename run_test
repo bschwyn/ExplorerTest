@@ -41,7 +41,7 @@ apt-get update
 apt-get install build-essential python-pip python-dev python-imaging python-smbus git
 prereq=0
 fi
-git clone https://github.com/bschwyn/spi_serial.git libs/spi_serial
+git clone https://github.com/EnhancedRadioDevices/spi_serial.git libs/spi_serial
 cd libs/spi_serial
 python setup.py install
 cd $here
