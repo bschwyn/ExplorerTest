@@ -82,6 +82,8 @@ pip install pillow
 
 fi
 
+if !( grep -q "Intel" /proc/cpuinfo); then
+
 echo "if spi* is NOT in the result of 'ls /dev'"
 echo "then add the following line to /boot/config.txt: dtparam=spi=on and reboot the pi."
 echo "Then run the installation file again."
@@ -95,10 +97,9 @@ echo "1. Interfacing Options"
 echo "2. I2C"
 echo "3. Enable I2C"
 python shapes.py
-#if Edison
 
+fi
 
-#end if
 
 # run cc1110 test
 echo "**RUNNING cc1110_set_leds.py"
