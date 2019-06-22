@@ -8,6 +8,7 @@ prereq=1
 # if RPi
 # need spi_serial, PIL, Adafruit_GPIO, Adafruit SSD1306
 
+if !(grep -q "Intel" /proc/cpuinfo); then
 echo "**CHECKING HAT EEPROM"
 echo "You should see 'Enhanced Radio Devices' on the next line."
 cat /proc/device-tree/hat/vendor
@@ -15,7 +16,7 @@ echo
 echo "You should see the name of the hat on the next line."
 cat /proc/device-tree/hat/product
 echo
-
+fi
 # get mraa and install
 if ! $(python -c "import mraa"); then
 if [[ $prereq ]]; then
